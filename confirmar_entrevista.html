@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas RH — Confirmar Entrevista</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B3D91; --navy-d:#082C66; --navy-g:#1F6FD6;
+  --gold:#C9A227; --gold-l:#E6CF7A; --gold-soft:#F3E2A6;
+  --bg:#F4F7FC; --line:#CFE0F5; --ink:#1a1a2e; --mut:#5a6a7e; --mut2:#8899aa;
+  --ok:#1a8a4a; --ok-bg:#e8f5e9; --ok-line:#4caf50; --wpp:#25D366;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);min-height:100vh;color:var(--ink);display:flex;flex-direction:column}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,var(--navy-d),var(--navy) 55%,var(--navy-g));padding:16px 22px;display:flex;align-items:center;gap:13px;box-shadow:0 2px 12px rgba(11,61,145,.3);border-bottom:3px solid var(--gold)}
+.hdr .logo{width:44px;height:44px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--navy);font-size:17px;flex-shrink:0;box-shadow:0 0 0 2px var(--gold),0 2px 6px rgba(0,0,0,.18)}
+.hdr h1{font-size:18px;font-weight:700;color:#fff;line-height:1.1}
+.hdr p{font-size:12px;color:rgba(255,255,255,.75);margin-top:2px}
+
+/* SHELL */
+.shell{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px 56px}
+.col{width:100%;max-width:480px;display:flex;flex-direction:column;gap:16px;animation:fadeUp .4s ease}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy-g));border-radius:16px;padding:26px 24px;color:#fff;text-align:center}
+.hero .badge{display:inline-block;background:rgba(201,162,39,.22);color:var(--gold-soft);border:1px solid rgba(201,162,39,.55);border-radius:20px;padding:5px 15px;font-size:12px;font-weight:600;margin-bottom:13px}
+.hero h2{font-size:21px;font-weight:700;margin-bottom:6px}
+.hero p{font-size:13.5px;color:rgba(255,255,255,.82);line-height:1.6}
+
+/* CARD */
+.card{background:#fff;border-radius:14px;padding:22px;box-shadow:0 1px 8px rgba(11,61,145,.08);border:1px solid var(--line)}
+.eyebrow{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow .ic{width:28px;height:28px;border-radius:8px;background:#EAF1FB;display:flex;align-items:center;justify-content:center;font-size:14px}
+
+/* DATA ROWS */
+.row{padding:13px 0;border-bottom:1px solid #E4ECF8}
+.row:first-of-type{padding-top:0}
+.row:last-of-type{border-bottom:none;padding-bottom:0}
+.row .k{font-size:10.5px;font-weight:700;color:var(--mut2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.row .v{font-size:16px;font-weight:700;color:var(--ink)}
+.row .v.navy{color:var(--navy)}
+.row .v.sub{font-size:13px;font-weight:600;color:var(--mut)}
+
+/* TEAMS BOX */
+.teams{background:#EAF1FB;border:1.5px solid var(--gold-l);border-radius:12px;padding:15px 16px;margin-top:4px}
+.teams .lbl{font-size:10.5px;font-weight:700;color:var(--mut2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.teams a{font-size:12.5px;color:var(--navy-d);word-break:break-all;font-weight:600;text-decoration:none;display:block}
+
+/* BUTTONS */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;padding:13px;font-family:inherit;text-decoration:none;transition:filter .15s,transform .05s}
+.btn:active{transform:scale(.99)}
+.btn-primary{background:linear-gradient(135deg,var(--navy),var(--navy-g));color:#fff}
+.btn-primary:hover{filter:brightness(1.06)}
+.btn-wpp{background:var(--wpp);color:#fff}
+.btn-wpp:hover{filter:brightness(1.05)}
+.btn-teams{background:#fff;color:var(--navy);border:2px solid var(--gold-l)}
+.btn-teams:hover{background:#F8FAFD}
+.btn[disabled]{opacity:.6;cursor:default}
+
+/* STATES */
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:50px 24px;color:var(--mut)}
+.center .big{font-size:46px}
+.center h3{font-size:18px;font-weight:700;color:var(--ink)}
+.center p{font-size:14px;line-height:1.6;max-width:320px}
+.loader-ring{width:34px;height:34px;border:3px solid #d8e3f4;border-top-color:var(--navy);border-radius:50%;animation:spin .8s linear infinite}
+
+.note{font-size:12px;color:var(--mut);line-height:1.6;text-align:center;margin-top:4px}
+.note strong{color:var(--navy)}
+.confirmed-pill{display:inline-flex;align-items:center;gap:6px;background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-line);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;margin-bottom:4px}
+
+.foot{text-align:center;font-size:11px;color:var(--mut2);padding:18px}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo">A</div>
+  <div>
+    <h1>Atlas RH</h1>
+    <p>Confirmação de Entrevista</p>
+  </div>
+</header>
+
+<main class="shell">
+  <div class="col">
+
+    <!-- ESTADO: carregando -->
+    <div id="stLoading" class="card">
+      <div class="center">
+        <div class="loader-ring"></div>
+        <p>Carregando os dados da sua entrevista…</p>
+      </div>
+    </div>
+
+    <!-- ESTADO: link inválido -->
+    <div id="stInvalid" class="card hide">
+      <div class="center">
+        <div class="big">🔗</div>
+        <h3>Link inválido ou expirado</h3>
+        <p>Não localizamos sua entrevista a partir deste link. Confira se abriu o link completo enviado pelo RH, ou fale com a equipe de recrutamento.</p>
+      </div>
+    </div>
+
+    <!-- ESTADO: confirmar (antes de confirmar) -->
+    <div id="stConfirm" class="hide">
+      <div class="hero">
+        <div class="badge">Entrevista Online · Microsoft Teams</div>
+        <h2 id="heroNome">Olá!</h2>
+        <p>Confirme abaixo seus dados e o horário. Ao confirmar, o link da sala é liberado.</p>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow"><span class="ic">📅</span>Sua entrevista</div>
+        <div class="row">
+          <div class="k">Candidato(a)</div>
+          <div class="v" id="cNome">—</div>
+        </div>
+        <div class="row">
+          <div class="k">Data e horário</div>
+          <div class="v navy" id="cData">—</div>
+        </div>
+        <div class="row">
+          <div class="k">Plataforma</div>
+          <div class="v sub">Microsoft Teams (online)</div>
+        </div>
+        <button class="btn btn-primary" id="btnConfirmar" onclick="confirmar()" style="margin-top:18px">✅ Confirmar minha presença</button>
+        <p class="note">Ao confirmar, avisamos o RH e liberamos o link da sala.</p>
+      </div>
+    </div>
+
+    <!-- ESTADO: confirmado (link liberado) -->
+    <div id="stDone" class="hide">
+      <div class="card" style="border-color:var(--ok-line);background:var(--ok-bg)">
+        <div class="center" style="padding:24px 12px 10px">
+          <div class="big">🎉</div>
+          <span class="confirmed-pill">✓ Presença confirmada</span>
+          <h3 id="doneNome">Tudo certo!</h3>
+          <p>Seu link da sala já está liberado abaixo.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="k">📅 Data e horário</div>
+          <div class="v navy" id="doneData">—</div>
+        </div>
+        <div class="teams">
+          <div class="lbl">🎥 Sala da entrevista — Microsoft Teams</div>
+          <a id="teamsLink" href="#" target="_blank">—</a>
+        </div>
+        <button class="btn btn-teams" id="btnEntrar" onclick="entrarSala()" style="margin-top:14px">🚀 Entrar na sala do Teams</button>
+        <a class="btn btn-wpp" id="btnWpp" href="#" target="_blank" style="margin-top:10px">📱 Receber confirmação no WhatsApp</a>
+        <p class="note" style="margin-top:14px">⏰ Acesse a sala alguns minutos antes do horário.<br><strong>Boa sorte na entrevista! 🧡</strong></p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="foot">Atlas RH — Sistema de Recrutamento</footer>
+
+<script>
+/* ===== CONFIG (mesmo banco do sistema RH) ===== */
+const FB_URL = 'https://facilitacell-default-rtdb.firebaseio.com';
+const TEAMS  = 'https://teams.live.com/meet/9318143793203?p=BIsr6nOqtpQHiW0ZaO';
+
+/* ===== HELPERS ===== */
+function $(id){ return document.getElementById(id); }
+function show(id){
+  ['stLoading','stInvalid','stConfirm','stDone'].forEach(s=>$(s).classList.add('hide'));
+  $(id).classList.remove('hide');
+}
+function fmtDate(dt){
+  if(!dt) return 'A confirmar com o RH';
+  const d = new Date(dt);
+  if(isNaN(d)) return dt;
+  return d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+}
+// Normaliza telefone p/ wa.me (formato internacional BR)
+function waPhone(p){
+  const d = (p||'').replace(/\D/g,'');
+  if(!d) return '';
+  if(d.startsWith('55')) return d;
+  return '55' + d;
+}
+function getToken(){
+  const u = new URL(window.location.href);
+  return u.searchParams.get('token') || u.searchParams.get('t') || u.searchParams.get('id') || '';
+}
+
+/* ===== ESTADO ===== */
+let CAND = null;          // candidato encontrado
+let ALL = [];             // lista completa (p/ salvar de volta sem perder ninguém)
+
+/* ===== CARREGAR ===== */
+async function carregar(){
+  const token = getToken();
+  if(!token){ show('stInvalid'); return; }
+
+  let data = null;
+  try{
+    const r = await fetch(FB_URL + '/candidatos.json');
+    if(r.ok) data = await r.json();
+  }catch(e){ console.error('[Firebase] erro ao carregar:', e); }
+
+  // Firebase pode devolver array ou objeto
+  if(Array.isArray(data)) ALL = data.filter(x=>x && x.id);
+  else if(data && typeof data==='object') ALL = Object.values(data).filter(x=>x && x.id);
+  else ALL = [];
+
+  // Token = id do candidato (cada candidato já tem id único no sistema)
+  CAND = ALL.find(c => c.id === token) || null;
+
+  if(!CAND){ show('stInvalid'); return; }
+
+  // Já confirmou antes? Vai direto pro link liberado
+  if(CAND.status === 'confirmado'){
+    preencherDone();
+    show('stDone');
+  }else{
+    preencherConfirm();
+    show('stConfirm');
+  }
+}
+
+function primeiroNome(nome){
+  if(!nome) return '';
+  return nome.trim().split(/\s+/)[0]
+    .replace(/^./, c=>c.toUpperCase());
+}
+
+function preencherConfirm(){
+  $('heroNome').textContent = 'Olá, ' + (primeiroNome(CAND.nome) || 'candidato(a)') + '!';
+  $('cNome').textContent = CAND.nome || '—';
+  $('cData').textContent = fmtDate(CAND.data);
+}
+
+function preencherDone(){
+  $('doneNome').textContent = 'Tudo certo, ' + (primeiroNome(CAND.nome) || '') + '!';
+  $('doneData').textContent = fmtDate(CAND.data);
+  $('teamsLink').textContent = TEAMS.replace(/^https?:\/\//,'');
+  $('teamsLink').href = TEAMS;
+
+  // WhatsApp
+  const dt = fmtDate(CAND.data);
+  const txt = '✅ *Presença Confirmada — Atlas RH*\n\n'
+    + 'Olá, *' + CAND.nome + '*! Sua presença na entrevista foi confirmada com sucesso! 🎉\n\n'
+    + '📅 *Data/Hora:* ' + dt + '\n'
+    + '📹 *Sala Microsoft Teams:*\n' + TEAMS + '\n\n'
+    + '⏰ Acesse a sala com alguns minutos de antecedência.\n\n'
+    + '*Boa sorte! 🧡*\n— Equipe Atlas RH';
+  const wp = waPhone(CAND.phone);
+  const btnWpp = $('btnWpp');
+  if(wp){
+    btnWpp.href = 'https://wa.me/' + wp + '?text=' + encodeURIComponent(txt);
+    btnWpp.classList.remove('hide');
+  }else{
+    btnWpp.classList.add('hide');
+  }
+}
+
+/* ===== CONFIRMAR ===== */
+async function confirmar(){
+  if(!CAND) return;
+  const btn = $('btnConfirmar');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Confirmando…';
+
+  // Atualiza o candidato na lista completa
+  const agora = new Date().toLocaleString('pt-BR');
+  const idx = ALL.findIndex(c => c.id === CAND.id);
+  if(idx >= 0){
+    ALL[idx].status = 'confirmado';
+    ALL[idx].confirmadoEm = agora;
+    CAND = ALL[idx];
+  }else{
+    CAND.status = 'confirmado';
+    CAND.confirmadoEm = agora;
+    ALL.push(CAND);
+  }
+
+  // Salva de volta no Firebase (PUT da lista inteira, igual o sistema RH faz)
+  try{
+    await fetch(FB_URL + '/candidatos.json', {
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(ALL)
+    });
+  }catch(e){
+    console.error('[Firebase] erro ao salvar confirmação:', e);
+    // Mesmo se falhar o save, libera o link pro candidato não ficar travado
+  }
+
+  preencherDone();
+  show('stDone');
+
+  // Abre o WhatsApp automaticamente (se houver telefone)
+  const wp = waPhone(CAND.phone);
+  if(wp){
+    setTimeout(()=>{ const a=$('btnWpp'); if(a && a.href && a.href!=='#') window.open(a.href,'_blank'); }, 1100);
+  }
+}
+
+function entrarSala(){ window.open(TEAMS,'_blank'); }
+
+/* ===== INIT ===== */
+carregar();
+</script>
+</body>
+</html>
